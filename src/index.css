@@ -1,13 +1,248 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(30, 30, 50, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(20, 20, 40, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #000000 50%, #111111 75%, #000000 100%);
+  color: white;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  overflow: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(40, 40, 60, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(30, 30, 50, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(20, 20, 40, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+h1 {
+  font-size: 3.5rem;
+  margin: 0 0 20px 0;
+  background: linear-gradient(45deg, #ffffff, #f0f0f0, #e0e0e0, #d0d0d0, #ffffff);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s ease infinite;
+  font-weight: bold;
+  letter-spacing: 2px;
+  filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.4));
+}
+
+.game-title {
+  font-size: min(8vw, 4.5rem);
+  margin: 0 0 60px 0;
+  background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #a8e6cf, #ff8b94, #b4f2e1, #ffe066, #ff6b6b);
+  background-size: 800% 800%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 4s ease infinite;
+  font-weight: bold;
+  letter-spacing: 3px;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes rainbow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.game-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: min(15vw, 150px);
+  position: relative;
+}
+
+.carrot {
+  font-size: min(10vw, 7rem);
+  cursor: grab;
+  transition: all 0.4s ease;
+  user-select: none;
+  animation: float 3s ease-in-out infinite;
+  position: relative;
+  left: -200px; /* Adjust this value as needed */
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+
+.carrot:hover {
+  transform: scale(1.2) rotate(8deg) translateY(-15px); /* Fixed the syntax error */
+  filter: brightness(1.3);
+}
+
+.carrot:active {
+  transform: scale(0.9) rotate(-5deg);
+}
+
+.pan {
+  width: min(25vw, 280px);
+  height: min(25vw, 280px);
+  background: radial-gradient(circle at 30% 30%, #2a2a2a, #0a0a0a);
+  border: min(1.5vw, 15px) solid #111;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 15px 30px rgba(255,255,255,0.05);
+  transition: all 0.6s ease;
+  animation: idle 4s ease-in-out infinite;
+  right:150px;
+}
+
+@keyframes idle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.02) rotate(0.5deg); }
+  75% { transform: scale(0.98) rotate(-0.5deg); }
+}
+
+.pan::after {
+  content: '';
+  position: absolute;
+  right: min(-10vw, -100px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(12vw, 120px);
+  height: min(2vw, 18px);
+  background: linear-gradient(135deg, #333, #111, #000);
+  border-radius: 9px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+.pan.cooking {
+  background: radial-gradient(circle at 30% 30%, #ff4400, #cc3300);
+  animation: heat 1.5s ease-in-out infinite;
+  box-shadow: 0 40px 80px rgba(255,50,0,0.4), 0 0 100px rgba(255,50,0,0.6);
+  border-color: #ff3300;
+  transform: scale(1.08);
+}
+
+@keyframes heat {
+  0%, 100% { transform: scale(1.08) rotate(0deg); }
+  50% { transform: scale(1.15) rotate(0deg); }
+}
+
+.pan.near {
+  border-color: #ffeb3b;
+  box-shadow: 
+    0 30px 60px rgba(0,0,0,0.8),
+    0 0 60px rgba(255,235,59,0.6),
+    0 0 120px rgba(255,235,59,0.3);
+  animation: ready 1s ease-in-out infinite alternate;
+  transform: scale(1.05);
+}
+
+@keyframes ready {
+  0% { box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 60px rgba(255,235,59,0.6); }
+  100% { box-shadow: 0 35px 70px rgba(0,0,0,0.9), 0 0 80px rgba(255,235,59,0.8); }
+}
+
+.pan.near::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  border: 3px solid rgba(255,235,59,0.6);
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.2); opacity: 0; }
+}
+
+.steam {
+  position: absolute;
+  top: min(-5vw, -50px);
+  font-size: min(4vw, 2.5rem);
+  animation: steam 1.2s ease-in-out infinite;
+}
+
+@keyframes steam {
+  0% { transform: translateY(0) scale(0.8); opacity: 0.9; }
+  50% { transform: translateY(-35px) scale(1.3); opacity: 0.8; }
+  100% { transform: translateY(-70px) scale(0.4); opacity: 0; }
+}
+
+.carrot.cooking {
+  font-size: min(10vw, 7rem);
+  animation: cook 0.4s ease-in-out infinite;
+  filter: brightness(1.4) saturate(1.6);
+  left: 0; /* Override the left positioning to center the cooking carrot */
+  position: static; /* Reset positioning to allow flex centering */
+}
+
+@keyframes cook {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(3deg); }
+}
+
+.dragging {
+  position: fixed;
+  font-size: min(10vw, 7rem);
+  pointer-events: none;
+  z-index: 1000;
+  transform: scale(1.4) rotate(20deg);
+  filter: brightness(1.3);
+  animation: wobble 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes wobble {
+  0% { transform: scale(1.4) rotate(20deg); }
+  100% { transform: scale(1.45) rotate(23deg); }
+}
+
+.dragging.near {
+  filter: brightness(1.5) drop-shadow(0 0 20px rgba(255,235,59,0.8));
+  animation: excited 0.2s ease-in-out infinite alternate;
+}
+
+@keyframes excited {
+  0% { transform: scale(1.4) rotate(20deg); }
+  100% { transform: scale(1.5) rotate(22deg); }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .game-area {
+    flex-direction: column;
+    gap: min(20vh, 120px);
+  }
+  
+ .game-title { 
+  font-size: min(12vw, 3rem); 
+  animation: rainbow 30s ease infinite;
+}
 }

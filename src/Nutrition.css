@@ -1,0 +1,382 @@
+/* Enable page scrolling */
+html, body {
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.nutrition-page {
+  min-height: 100vh;
+  height: auto;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(30, 30, 50, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(20, 20, 40, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #000000 50%, #111111 75%, #000000 100%);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 20px 100px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  margin-bottom: 80px;
+  z-index: 1000;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 18px 24px;
+  padding-left: 60px;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  color: white;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.search-bar::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
+}
+
+.search-bar:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 4px rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.search-icon {
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.search-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  margin-top: 8px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 256px;
+  animation: slideDown 0.3s ease-out;
+  z-index: 1001;
+}
+
+/* Dark theme scrollbar */
+.search-options::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search-options::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.search-options::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.search-options::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-option {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-option:last-child {
+  border-bottom: none;
+}
+
+.search-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(8px);
+}
+
+.food-emoji {
+  font-size: 1.5rem;
+  margin-right: 16px;
+}
+
+.food-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.category-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  max-width: 800px;
+  transition: all 0.4s ease;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+/* When searching - just push buttons down, keep same layout */
+.category-buttons.searching {
+  margin-top: 200px;
+}
+
+/* Regular buttons (not custom) - MAKE THEM THICK! */
+.category-row:not(.custom-row) .category-btn {
+  padding: 50px 35px;
+  min-height: 180px;
+}
+
+.category-row:not(.custom-row) .category-emoji {
+  font-size: 3.5rem;
+}
+
+.category-row:not(.custom-row) .category-name {
+  font-size: 1.3rem;
+}
+
+.category-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.category-row.custom-row {
+  grid-template-columns: 1fr;
+}
+
+.category-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.expanded-foods {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  animation: expandDown 0.4s ease-out;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes expandDown {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+    max-height: 0;
+    padding: 0 20px;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    max-height: none;
+    padding: 20px;
+  }
+}
+
+.food-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.food-item:last-child {
+  margin-bottom: 0;
+}
+
+.food-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.food-item .food-emoji {
+  font-size: 1.6rem;
+  margin-right: 15px;
+}
+
+.food-item .food-name {
+  font-size: 1.1rem;
+  color: white;
+  font-weight: 500;
+}
+
+/* Dark scrollbar for expanded foods */
+.expanded-foods::-webkit-scrollbar {
+  width: 8px;
+}
+
+.expanded-foods::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.expanded-foods::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.expanded-foods::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.category-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  min-height: 160px;
+  justify-content: center;
+  width: 100%;
+}
+
+.category-btn:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.category-btn.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-5px);
+}
+
+.custom-btn {
+  background: rgba(255, 235, 59, 0.15) !important;
+  border-color: rgba(255, 235, 59, 0.3) !important;
+  box-shadow: 0 10px 40px rgba(255, 235, 59, 0.1) !important;
+}
+
+.custom-btn:hover {
+  border-color: rgba(255, 235, 59, 0.5) !important;
+  box-shadow: 0 20px 60px rgba(255, 235, 59, 0.2) !important;
+}
+
+.custom-btn.active {
+  background: rgba(255, 235, 59, 0.25) !important;
+  border-color: rgba(255, 235, 59, 0.6) !important;
+}
+
+.category-emoji {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.category-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .category-buttons {
+    max-width: 600px;
+  }
+  
+  .category-row {
+    gap: 20px;
+  }
+  
+  .category-btn {
+    padding: 30px 20px;
+    min-height: 130px;
+  }
+  
+  .category-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+  
+  .category-name {
+    font-size: 1.1rem;
+  }
+
+  .category-buttons.searching {
+    margin-top: 150px;
+  }
+
+  .expanded-foods {
+    max-height: 220px;
+    padding: 15px;
+  }
+
+  /* Mobile thick buttons */
+  .category-row:not(.custom-row) .category-btn {
+    padding: 50px 30px;
+    min-height: 180px;
+  }
+
+  .category-row:not(.custom-row) .category-emoji {
+    font-size: 3.5rem;
+  }
+
+  .category-row:not(.custom-row) .category-name {
+    font-size: 1.3rem;
+  }
+}

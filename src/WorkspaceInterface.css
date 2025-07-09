@@ -1,0 +1,1984 @@
+/* Clean Screen-Based Layout */
+.ingredient-game {
+  min-height: 100vh;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(30, 30, 50, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(20, 20, 40, 0.3) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #000000 50%, #111111 75%, #000000 100%);
+  color: white;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* Kitchen Screen Optimizations - No Scroll Version */
+.kitchen-screen .ingredient-game {
+  max-height: 100vh; /* Prevent exceeding viewport */
+  overflow: hidden; /* Prevent main container scroll */
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+/* Common Header */
+.workspace-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 25px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Compact header for kitchen screen */
+.kitchen-screen .workspace-header {
+  text-align: center;
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  flex-shrink: 0; /* Don't shrink */
+}
+
+.workspace-header .food-display {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.kitchen-screen .workspace-header .food-display {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes rainbow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.workspace-header h1 {
+  font-size: 2.5rem;
+  margin: 0 0 15px 0;
+  background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 4s ease infinite;
+}
+
+.kitchen-screen .workspace-header h1 {
+  font-size: 1.8rem;
+  margin: 0 0 8px 0;
+  background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 4s ease infinite;
+}
+
+.workspace-header p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.kitchen-screen .workspace-header p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Back Button */
+.back-button {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* INGREDIENT SELECTION SCREEN */
+.selection-screen .ingredient-selection-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.available-ingredients {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 30px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.available-ingredients h3 {
+  margin: 0 0 25px 0;
+  text-align: center;
+  color: #48dbfb;
+  font-size: 1.4rem;
+  text-shadow: 0 0 15px rgba(72, 219, 251, 0.5);
+}
+
+.ingredient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.ingredient-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.ingredient-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ingredient-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.ingredient-card:hover::before {
+  opacity: 1;
+}
+
+.ingredient-card.selected {
+  background: rgba(76, 175, 80, 0.25);
+  border-color: rgba(76, 175, 80, 0.6);
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.4);
+  transform: translateY(-5px);
+}
+
+.ingredient-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(76, 175, 80, 0.9);
+  color: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.5);
+}
+
+.ingredient-emoji-large {
+  font-size: 3rem;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.ingredient-name-small {
+  font-weight: 600;
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.ingredient-category {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 12px;
+  border-radius: 12px;
+  text-transform: capitalize;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.shopping-cart {
+  background: rgba(255, 235, 59, 0.15);
+  backdrop-filter: blur(15px);
+  border: 3px solid rgba(255, 235, 59, 0.3);
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(255, 235, 59, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.shopping-cart h3 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  color: #ffeb3b;
+  font-size: 1.3rem;
+  text-shadow: 0 0 15px rgba(255, 235, 59, 0.5);
+}
+
+.selected-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.empty-cart {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  padding: 30px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+}
+
+.selected-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.selected-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+}
+
+.selected-item .item-emoji {
+  font-size: 1.5rem;
+}
+
+.selected-item .item-name {
+  flex: 1;
+  font-weight: 600;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.remove-btn {
+  background: rgba(244, 67, 54, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: rgba(244, 67, 54, 1);
+  transform: scale(1.1);
+}
+
+.proceed-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  border: 2px solid rgba(76, 175, 80, 0.7);
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.complete-burger:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5CBF60, #4CAF50);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(76, 175, 80, 0.5);
+}
+
+.complete-burger:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Special styling for bread ingredients */
+.ingredient-card[data-category="bread"] {
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.2), rgba(160, 82, 45, 0.15));
+  border-color: rgba(218, 165, 32, 0.4);
+  box-shadow: 0 8px 25px rgba(218, 165, 32, 0.2);
+}
+
+.ingredient-card[data-category="bread"]:hover {
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.3), rgba(160, 82, 45, 0.25));
+  border-color: rgba(218, 165, 32, 0.6);
+  box-shadow: 0 15px 40px rgba(218, 165, 32, 0.3);
+}
+
+.ingredient-card[data-category="bread"].selected {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(218, 165, 32, 0.2));
+  border-color: rgba(76, 175, 80, 0.7);
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.4), 0 0 15px rgba(218, 165, 32, 0.3);
+}
+
+.ingredient-card[data-category="bread"] .ingredient-name-small {
+  color: #f5deb3;
+  text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.5);
+}
+
+.ingredient-card[data-category="bread"] .ingredient-category {
+  background: rgba(218, 165, 32, 0.3);
+  color: #ffd700;
+  border-color: rgba(218, 165, 32, 0.5);
+  text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.5);
+}
+
+/* Protein ingredients - Rich red/burgundy theme */
+.ingredient-card[data-category="protein"] {
+  background: linear-gradient(135deg, rgba(178, 34, 34, 0.2), rgba(139, 0, 0, 0.15));
+  border-color: rgba(178, 34, 34, 0.4);
+  box-shadow: 0 8px 25px rgba(178, 34, 34, 0.2);
+}
+
+.ingredient-card[data-category="protein"]:hover {
+  background: linear-gradient(135deg, rgba(178, 34, 34, 0.3), rgba(139, 0, 0, 0.25));
+  border-color: rgba(178, 34, 34, 0.6);
+  box-shadow: 0 15px 40px rgba(178, 34, 34, 0.3);
+}
+
+.ingredient-card[data-category="protein"].selected {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(178, 34, 34, 0.2));
+  border-color: rgba(76, 175, 80, 0.7);
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.4), 0 0 15px rgba(178, 34, 34, 0.3);
+}
+
+.ingredient-card[data-category="protein"] .ingredient-name-small {
+  color: #ffb6c1;
+  text-shadow: 1px 1px 2px rgba(139, 0, 0, 0.5);
+}
+
+.ingredient-card[data-category="protein"] .ingredient-category {
+  background: rgba(178, 34, 34, 0.3);
+  color: #ff6b6b;
+  border-color: rgba(178, 34, 34, 0.5);
+  text-shadow: 1px 1px 2px rgba(139, 0, 0, 0.5);
+}
+
+/* Vegetables - Fresh green theme */
+.ingredient-card[data-category="vegetables"] {
+  background: linear-gradient(135deg, rgba(34, 139, 34, 0.2), rgba(0, 100, 0, 0.15));
+  border-color: rgba(34, 139, 34, 0.4);
+  box-shadow: 0 8px 25px rgba(34, 139, 34, 0.2);
+}
+
+.ingredient-card[data-category="vegetables"]:hover {
+  background: linear-gradient(135deg, rgba(34, 139, 34, 0.3), rgba(0, 100, 0, 0.25));
+  border-color: rgba(34, 139, 34, 0.6);
+  box-shadow: 0 15px 40px rgba(34, 139, 34, 0.3);
+}
+
+.ingredient-card[data-category="vegetables"].selected {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(34, 139, 34, 0.2));
+  border-color: rgba(76, 175, 80, 0.7);
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.4), 0 0 15px rgba(34, 139, 34, 0.3);
+}
+
+.ingredient-card[data-category="vegetables"] .ingredient-name-small {
+  color: #90ee90;
+  text-shadow: 1px 1px 2px rgba(0, 100, 0, 0.5);
+}
+
+.ingredient-card[data-category="vegetables"] .ingredient-category {
+  background: rgba(34, 139, 34, 0.3);
+  color: #32cd32;
+  border-color: rgba(34, 139, 34, 0.5);
+  text-shadow: 1px 1px 2px rgba(0, 100, 0, 0.5);
+}
+
+/* Cheese - Creamy yellow/orange theme */
+.ingredient-card[data-category="cheese"] {
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.2), rgba(255, 165, 0, 0.15));
+  border-color: rgba(255, 140, 0, 0.4);
+  box-shadow: 0 8px 25px rgba(255, 140, 0, 0.2);
+}
+
+.ingredient-card[data-category="cheese"]:hover {
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.3), rgba(255, 165, 0, 0.25));
+  border-color: rgba(255, 140, 0, 0.6);
+  box-shadow: 0 15px 40px rgba(255, 140, 0, 0.3);
+}
+
+.ingredient-card[data-category="cheese"].selected {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(255, 140, 0, 0.2));
+  border-color: rgba(76, 175, 80, 0.7);
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.4), 0 0 15px rgba(255, 140, 0, 0.3);
+}
+
+.ingredient-card[data-category="cheese"] .ingredient-name-small {
+  color: #ffd700;
+  text-shadow: 1px 1px 2px rgba(255, 140, 0, 0.5);
+}
+
+.ingredient-card[data-category="cheese"] .ingredient-category {
+  background: rgba(255, 140, 0, 0.3);
+  color: #ffa500;
+  border-color: rgba(255, 140, 0, 0.5);
+  text-shadow: 1px 1px 2px rgba(255, 140, 0, 0.5);
+}
+
+/* Sauces - Rich purple/magenta theme */
+.ingredient-card[data-category="sauces"] {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.15));
+  border-color: rgba(138, 43, 226, 0.4);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.2);
+}
+
+.ingredient-card[data-category="sauces"]:hover {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(75, 0, 130, 0.25));
+  border-color: rgba(138, 43, 226, 0.6);
+  box-shadow: 0 15px 40px rgba(138, 43, 226, 0.3);
+}
+
+.ingredient-card[data-category="sauces"].selected {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(138, 43, 226, 0.2));
+  border-color: rgba(76, 175, 80, 0.7);
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.4), 0 0 15px rgba(138, 43, 226, 0.3);
+}
+
+.ingredient-card[data-category="sauces"] .ingredient-name-small {
+  color: #dda0dd;
+  text-shadow: 1px 1px 2px rgba(75, 0, 130, 0.5);
+}
+
+.ingredient-card[data-category="sauces"] .ingredient-category {
+  background: rgba(138, 43, 226, 0.3);
+  color: #da70d6;
+  border-color: rgba(138, 43, 226, 0.5);
+  text-shadow: 1px 1px 2px rgba(75, 0, 130, 0.5);
+}
+
+.selected-list::-webkit-scrollbar,
+.ingredient-list::-webkit-scrollbar,
+.prepared-list::-webkit-scrollbar,
+.prepared-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.selected-list::-webkit-scrollbar-track,
+.ingredient-list::-webkit-scrollbar-track,
+.prepared-list::-webkit-scrollbar-track,
+.prepared-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.selected-list::-webkit-scrollbar-thumb,
+.ingredient-list::-webkit-scrollbar-thumb,
+.prepared-list::-webkit-scrollbar-thumb,
+.prepared-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.selected-list::-webkit-scrollbar-thumb:hover,
+.ingredient-list::-webkit-scrollbar-thumb:hover,
+.prepared-list::-webkit-scrollbar-thumb:hover,
+.prepared-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Drag and Drop Visual Feedback */
+.ingredient-item.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.cutting-board-area.drag-highlight,
+.scale-area.drag-highlight {
+  animation: dropZonePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dropZonePulse {
+  0%, 100% { 
+    border-color: rgba(255, 235, 59, 0.5);
+    box-shadow: 0 0 20px rgba(255, 235, 59, 0.3);
+  }
+  50% { 
+    border-color: rgba(255, 235, 59, 0.8);
+    box-shadow: 0 0 35px rgba(255, 235, 59, 0.5);
+  }
+}
+
+/* Enhanced ingredient inventory bar - BIGGER! */
+.ingredient-display-bar {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 25px 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.ingredient-display-bar h3 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  color: #48dbfb;
+  font-size: 1.3rem;
+  text-shadow: 0 0 20px rgba(72, 219, 251, 0.5);
+}
+
+.ingredient-icons-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  min-height: 130px;
+}
+
+.inventory-ingredient {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid rgba(255, 255, 255, 0.25);
+  border-radius: 22px;
+  cursor: grab;
+  transition: all 0.3s ease;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Staggered floating animation for game feel */
+.inventory-ingredient:nth-child(1) { animation-delay: 0s; }
+.inventory-ingredient:nth-child(2) { animation-delay: 0.5s; }
+.inventory-ingredient:nth-child(3) { animation-delay: 1s; }
+.inventory-ingredient:nth-child(4) { animation-delay: 1.5s; }
+.inventory-ingredient:nth-child(5) { animation-delay: 2s; }
+.inventory-ingredient:nth-child(6) { animation-delay: 2.5s; }
+
+.inventory-ingredient:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-12px) scale(1.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.inventory-ingredient:active {
+  cursor: grabbing;
+  transform: scale(1.2) rotate(10deg);
+}
+
+.ingredient-icon-large {
+  font-size: 4rem;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+  margin-bottom: 8px;
+}
+
+.ingredient-type-indicator {
+  position: absolute;
+  bottom: -12px;
+  right: -12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 4px solid rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Color coding for different ingredient types - ENHANCED BIGGER */
+.inventory-ingredient.scale {
+  border-color: rgba(200, 200, 200, 0.6);
+  background: linear-gradient(135deg, rgba(70, 70, 70, 0.3), rgba(50, 50, 50, 0.2));
+  box-shadow: 0 12px 35px rgba(200, 200, 200, 0.25);
+}
+
+.inventory-ingredient.scale:hover {
+  border-color: rgba(200, 200, 200, 0.8);
+  background: linear-gradient(135deg, rgba(70, 70, 70, 0.4), rgba(50, 50, 50, 0.3));
+  box-shadow: 0 20px 50px rgba(200, 200, 200, 0.35);
+}
+
+.inventory-ingredient.cutting-board {
+  border-color: rgba(160, 82, 45, 0.6);
+  background: linear-gradient(135deg, rgba(160, 82, 45, 0.3), rgba(139, 69, 19, 0.2));
+  box-shadow: 0 12px 35px rgba(160, 82, 45, 0.25);
+}
+
+.inventory-ingredient.cutting-board:hover {
+  border-color: rgba(160, 82, 45, 0.8);
+  background: linear-gradient(135deg, rgba(160, 82, 45, 0.4), rgba(139, 69, 19, 0.3));
+  box-shadow: 0 20px 50px rgba(160, 82, 45, 0.35);
+}
+
+.inventory-ingredient.direct-use {
+  border-color: rgba(76, 175, 80, 0.6);
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(67, 160, 71, 0.2));
+  box-shadow: 0 12px 35px rgba(76, 175, 80, 0.25);
+}
+
+.inventory-ingredient.direct-use:hover {
+  border-color: rgba(76, 175, 80, 0.8);
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.4), rgba(67, 160, 71, 0.3));
+  box-shadow: 0 20px 50px rgba(76, 175, 80, 0.35);
+}
+
+/* Optimized main workspace - use remaining space */
+.kitchen-screen .kitchen-workspace {
+  display: grid;
+  grid-template-areas: 
+    "stations stations"
+    "prepared prepared";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 15px;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex: 1; /* Take remaining space */
+  min-height: 0; /* Allow shrinking */
+}
+
+/* Updated workspace stations - cutting board gets 80% space, scale gets 20% */
+.kitchen-screen .workspace-stations {
+  grid-area: stations;
+  display: grid;
+  grid-template-columns: 4fr 1fr; /* 80% cutting board, 20% scale */
+  gap: 15px;
+  min-height: 0;
+}
+
+/* Cutting board area - MASSIVE DISPLAY, NO CONTAINER PADDING */
+.cutting-board-area {
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  border-radius: 0;
+  padding: 0; /* Remove all padding */
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
+  transition: all 0.3s ease;
+  min-height: 0;
+  flex: 1;
+  align-items: center; /* Center the cutting board */
+  justify-content: center;
+}
+
+.cutting-board-area.drag-over {
+  background: transparent;
+  transform: none;
+  box-shadow: none;
+}
+
+.cutting-board-area h3 {
+  margin: 0 0 5px 0;
+  text-align: center;
+  color: #deb887;
+  font-size: 1rem;
+  text-shadow: 0 0 10px rgba(222, 184, 135, 0.5);
+}
+
+.cutting-board-surface {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  width: 100%;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: none;
+}
+
+/* MASSIVE Cutting Board - Takes full available space with proper proportions */
+.cutting-board-surface::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75vw; /* Much larger - 75% of viewport width */
+  max-width: 900px; /* Increased max width */
+  height: 45vh; /* Larger height - 45% of viewport */
+  max-height: 450px; /* Increased max height */
+  min-width: 600px; /* Larger minimum */
+  min-height: 350px; /* Larger minimum */
+  background: 
+    radial-gradient(circle at 8% center, rgba(0, 0, 0, 0.9) 18px, transparent 19px, transparent 21px, #8B4513 22px),
+    linear-gradient(145deg, #8B4513 0%, #A0522D 30%, #8B4513 70%, #654321 100%);
+  border-radius: 40px 200px 200px 40px; /* Larger rounded corners */
+  box-shadow: 
+    inset 0 15px 40px rgba(0, 0, 0, 0.4),
+    inset 0 -15px 35px rgba(255, 255, 255, 0.1),
+    0 30px 80px rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+/* Handle extending to the left - proportionally larger */
+.cutting-board-surface::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-37.5vw, -50%); /* Adjusted for larger board */
+  width: 18vw; /* Larger handle */
+  max-width: 200px;
+  height: 18vw;
+  max-height: 200px;
+  min-width: 150px;
+  min-height: 150px;
+  background: 
+    radial-gradient(circle at 75% center, rgba(0, 0, 0, 0.9) 18px, transparent 19px, transparent 21px, #8B4513 22px),
+    linear-gradient(145deg, #8B4513 0%, #A0522D 30%, #8B4513 70%, #654321 100%);
+  border-radius: 50% 40px 40px 50%;
+  box-shadow: 
+    inset 0 10px 25px rgba(0, 0, 0, 0.3),
+    inset 0 -10px 20px rgba(255, 255, 255, 0.1),
+    0 20px 50px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+/* Wood grain texture overlay - updated for larger board */
+.cutting-board-surface .wood-grain {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75vw;
+  max-width: 900px;
+  height: 45vh;
+  max-height: 450px;
+  min-width: 600px;
+  min-height: 350px;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      rgba(139, 69, 19, 0.3) 1px,
+      transparent 2px,
+      transparent 30px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      rgba(101, 67, 33, 0.15) 1px,
+      transparent 2px,
+      transparent 50px
+    );
+  border-radius: 40px 200px 200px 40px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Scale area - MUCH SMALLER, compact design */
+.scale-area {
+  background: linear-gradient(145deg, rgba(70, 70, 70, 0.3), rgba(50, 50, 50, 0.25));
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(200, 200, 200, 0.4);
+  border-radius: 12px;
+  padding: 8px; /* Reduced padding */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  min-height: 0;
+  max-width: 200px; /* Much smaller max width */
+  width: 100%;
+  align-self: flex-start; /* Align to top */
+}
+
+.scale-area h3 {
+  margin: 0 0 6px 0;
+  text-align: center;
+  color: #e0e0e0;
+  font-size: 0.8rem; /* Smaller font */
+  text-shadow: 0 0 8px rgba(224, 224, 224, 0.5);
+}
+
+.scale-surface {
+  flex: 1;
+  background: radial-gradient(circle at center, #c0c0c0 0%, #a0a0a0 70%, #808080 100%);
+  border: 2px solid #666; /* Thinner border */
+  border-radius: 10px;
+  padding: 10px; /* Reduced padding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px; /* Much smaller minimum height */
+  max-height: 120px; /* Smaller max height */
+  box-shadow: 
+    inset 0 3px 10px rgba(0, 0, 0, 0.5),
+    inset 0 -3px 6px rgba(255, 255, 255, 0.2),
+    0 2px 12px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.scale-surface::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  height: 20px; /* Smaller display */
+  background: linear-gradient(145deg, #2c2c2c, #1c1c1c);
+  border-radius: 4px;
+  border: 1px solid #333; /* Thinner border */
+  box-shadow: 
+    inset 0 1px 3px rgba(0, 0, 0, 0.5),
+    0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.scale-surface::after {
+  content: '0.00g';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem; /* Smaller font */
+  font-weight: bold;
+  text-shadow: 0 0 4px #00ff00;
+  z-index: 1;
+}
+
+.scale-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+  margin-top: 15px;
+}
+
+.scale-emoji {
+  font-size: 1.5rem; /* Smaller emoji */
+  opacity: 0.7;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.scale-hint p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.7rem; /* Smaller text */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Hover effects - updated for new sizes */
+.cutting-board-area.drag-over .cutting-board-surface::before {
+  box-shadow: 
+    inset 0 15px 40px rgba(0, 0, 0, 0.4),
+    inset 0 -15px 35px rgba(255, 255, 255, 0.1),
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 80px rgba(255, 235, 59, 0.8);
+  transform: translate(-50%, -50%) scale(1.005); /* Very subtle scale to prevent overflow */
+}
+
+.cutting-board-area.drag-over .cutting-board-surface::after {
+  transform: translate(-37.5vw, -50%) scale(1.005);
+  box-shadow: 
+    inset 0 10px 25px rgba(0, 0, 0, 0.3),
+    inset 0 -10px 20px rgba(255, 255, 255, 0.1),
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 0 50px rgba(255, 235, 59, 0.6);
+}
+
+.scale-area.drag-over {
+  border-color: rgba(200, 200, 200, 0.7);
+  background: rgba(70, 70, 70, 0.4);
+  transform: scale(1.05); /* Slightly more noticeable for the small scale */
+  box-shadow: 0 15px 40px rgba(200, 200, 200, 0.2);
+}
+
+/* Enhanced cutting board hint for better visibility on large board */
+.cutting-board-hint {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.95);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.board-emoji {
+  font-size: 5rem; /* Larger emoji for larger board */
+  opacity: 0.9;
+  text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.8);
+  margin-bottom: 15px;
+}
+
+.cutting-board-hint p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.6rem; /* Larger text for larger board */
+  text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 22px 35px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  border: 3px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Prepared ingredients - compact at bottom */
+.kitchen-screen .prepared-ingredients {
+  grid-area: prepared;
+  background: rgba(76, 175, 80, 0.15);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(76, 175, 80, 0.3);
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.1);
+  max-height: 120px; /* Limit height */
+  min-height: 80px;
+}
+
+.prepared-ingredients h3 {
+  margin: 0 0 10px 0;
+  text-align: center;
+  color: #4CAF50;
+  font-size: 1rem;
+  text-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+.prepared-list {
+  max-height: 80px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.no-prepared {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  padding: 15px;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.prepared-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(76, 175, 80, 0.2);
+  border: 2px solid rgba(76, 175, 80, 0.4);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  transition: all 0.3s ease;
+}
+
+.prepared-item:hover {
+  background: rgba(76, 175, 80, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.prepared-item .item-emoji {
+  font-size: 1.2rem;
+}
+
+.prepared-item .item-name {
+  flex: 1;
+  font-weight: 600;
+  color: white;
+  font-size: 0.8rem;
+}
+
+.item-amount {
+  font-size: 0.7rem;
+  color: #feca57;
+  background: rgba(254, 202, 87, 0.2);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(254, 202, 87, 0.3);
+}
+
+/* Proceed button - keep it accessible */
+.proceed-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  border: 2px solid rgba(76, 175, 80, 0.7);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  margin-top: 10px;
+}
+
+.proceed-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5CBF60, #4CAF50);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+}
+
+.proceed-btn:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Kitchen workspace adjustments for new layout */
+.ingredients-to-prepare {
+  grid-area: ingredients;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.ingredients-to-prepare h3 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  color: #48dbfb;
+  font-size: 1.2rem;
+}
+
+.ingredient-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  cursor: grab;
+  transition: all 0.3s ease;
+}
+
+.ingredient-item:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+
+.ingredient-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.ingredient-item .ingredient-emoji {
+  font-size: 1.5rem;
+}
+
+.ingredient-item .ingredient-name {
+  flex: 1;
+  font-weight: 600;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.prep-hint {
+  font-size: 0.8rem;
+  color: rgba(255, 235, 59, 0.8);
+  background: rgba(255, 235, 59, 0.1);
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 235, 59, 0.3);
+}
+
+.workspace-stations {
+  grid-area: stations;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* BURGER ASSEMBLY SCREEN */
+.assembly-screen .assembly-workspace {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.available-prepared {
+  background: rgba(76, 175, 80, 0.15);
+  backdrop-filter: blur(15px);
+  border: 3px solid rgba(76, 175, 80, 0.3);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(76, 175, 80, 0.1);
+}
+
+.available-prepared h3 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  color: #4CAF50;
+  font-size: 1.3rem;
+  text-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+}
+
+.prepared-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.prepared-ingredient-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.prepared-ingredient-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+.ingredient-amount {
+  font-size: 0.8rem;
+  color: #feca57;
+  background: rgba(254, 202, 87, 0.2);
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(254, 202, 87, 0.3);
+}
+
+.burger-assembly {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.burger-assembly h3 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  color: #ff9ff3;
+  font-size: 1.4rem;
+  text-shadow: 0 0 15px rgba(255, 159, 243, 0.5);
+}
+
+.burger-plate {
+  flex: 1;
+  background: 
+    radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 70%, transparent 100%);
+  border: 4px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  position: relative;
+  margin-bottom: 20px;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  box-shadow: 
+    inset 0 6px 15px rgba(0, 0, 0, 0.4),
+    inset 0 -6px 12px rgba(255, 255, 255, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.plate-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  opacity: 0.6;
+}
+
+.plate-icon {
+  font-size: 4rem;
+  opacity: 0.5;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.plate-empty p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.burger-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.burger-layer {
+  position: absolute;
+  width: 140px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  animation: layerDrop 0.5s ease;
+}
+
+@keyframes layerDrop {
+  0% { 
+    opacity: 0; 
+    transform: translateY(-50px) scale(0.7);
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+  }
+}
+
+.burger-layer:hover {
+  transform: scale(1.1) translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.layer-emoji {
+  font-size: 2rem;
+  margin-right: 10px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.layer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.layer-name {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.layer-amount {
+  font-size: 0.7rem;
+  color: #feca57;
+  text-align: center;
+  background: rgba(254, 202, 87, 0.2);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
+.assembly-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.burger-stats {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.complete-burger {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  border: 2px solid rgba(76, 175, 80, 0.7);
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive adjustments for the new layout */
+@media (max-width: 1200px) {
+  .cutting-board-surface::before {
+    width: 80vw;
+    max-width: 800px;
+    height: 40vh;
+    max-height: 400px;
+    min-width: 500px;
+    min-height: 300px;
+  }
+  
+  .cutting-board-surface::after {
+    width: 16vw;
+    max-width: 180px;
+    height: 16vw;
+    max-height: 180px;
+    transform: translate(-40vw, -50%);
+  }
+  
+  .cutting-board-surface .wood-grain {
+    width: 80vw;
+    max-width: 800px;
+    height: 40vh;
+    max-height: 400px;
+    min-width: 500px;
+    min-height: 300px;
+  }
+  
+  .scale-area {
+    max-width: 180px;
+  }
+  
+  .selection-screen .ingredient-selection-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .shopping-cart {
+    position: static;
+  }
+  
+  .kitchen-screen .kitchen-workspace {
+    grid-template-areas: 
+      "ingredients"
+      "stations"
+      "prepared";
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .workspace-stations {
+    grid-template-columns: 1fr;
+  }
+  
+  .assembly-screen .assembly-workspace {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .kitchen-screen .workspace-stations {
+    grid-template-columns: 1fr; /* Stack vertically on mobile */
+    gap: 20px;
+  }
+  
+  .cutting-board-surface::before {
+    width: 90vw;
+    max-width: 600px;
+    height: 35vh;
+    max-height: 300px;
+    min-width: 400px;
+    min-height: 250px;
+  }
+  
+  .cutting-board-surface::after {
+    width: 14vw;
+    max-width: 120px;
+    height: 14vw;
+    max-height: 120px;
+    transform: translate(-45vw, -50%);
+  }
+  
+  .cutting-board-surface .wood-grain {
+    width: 90vw;
+    max-width: 600px;
+    height: 35vh;
+    max-height: 300px;
+    min-width: 400px;
+    min-height: 250px;
+  }
+  
+  .scale-area {
+    max-width: 100%;
+    align-self: center;
+  }
+  
+  .board-emoji {
+    font-size: 3.5rem;
+  }
+  
+  .cutting-board-hint p {
+    font-size: 1.2rem;
+    padding: 18px 25px;
+  }
+  
+  .ingredient-game {
+    padding: 15px;
+  }
+  
+  .workspace-header {
+    padding: 20px;
+    margin-bottom: 25px;
+  }
+  
+  .workspace-header .food-display {
+    font-size: 3rem;
+  }
+  
+  .workspace-header h1 {
+    font-size: 2rem;
+  }
+  
+  .workspace-header p {
+    font-size: 1rem;
+  }
+  
+  .back-button {
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
+  }
+  
+  .ingredient-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+  }
+  
+  .ingredient-card {
+    padding: 15px;
+  }
+  
+  .ingredient-emoji-large {
+    font-size: 2.5rem;
+  }
+  
+  .ingredient-name-small {
+    font-size: 0.9rem;
+  }
+  
+  .cutting-board-surface,
+  .scale-surface {
+    min-height: 150px;
+    padding: 20px;
+  }
+  
+  .board-emoji,
+  .scale-emoji {
+    font-size: 2.5rem;
+  }
+  
+  .cutting-board-hint p,
+  .scale-hint p {
+    font-size: 1rem;
+  }
+  
+  .burger-plate {
+    min-height: 300px;
+  }
+  
+  .burger-layer {
+    width: 120px;
+    height: 35px;
+  }
+  
+  .layer-emoji {
+    font-size: 1.6rem;
+    margin-right: 8px;
+  }
+  
+  .layer-name {
+    font-size: 0.75rem;
+  }
+  
+  .layer-amount {
+    font-size: 0.65rem;
+  }
+  
+  .prepared-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .shopping-cart,
+  .available-ingredients,
+  .ingredients-to-prepare,
+  .cutting-board-area,
+  .scale-area,
+  .prepared-ingredients,
+  .available-prepared,
+  .burger-assembly {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ingredient-game {
+    padding: 10px;
+  }
+  
+  .workspace-header {
+    padding: 15px;
+  }
+  
+  .workspace-header .food-display {
+    font-size: 2.5rem;
+  }
+  
+  .workspace-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .back-button {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+  
+  .ingredient-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+  }
+  
+  .ingredient-card {
+    padding: 12px;
+  }
+  
+  .ingredient-emoji-large {
+    font-size: 2rem;
+  }
+  
+  .ingredient-name-small {
+    font-size: 0.8rem;
+  }
+  
+  .cutting-board-surface,
+  .scale-surface {
+    min-height: 120px;
+    padding: 15px;
+  }
+  
+  .board-emoji,
+  .scale-emoji {
+    font-size: 2rem;
+  }
+  
+  .cutting-board-hint p,
+  .scale-hint p {
+    font-size: 0.9rem;
+  }
+  
+  .burger-plate {
+    min-height: 250px;
+  }
+  
+  .burger-layer {
+    width: 100px;
+    height: 30px;
+  }
+  
+  .layer-emoji {
+    font-size: 1.4rem;
+    margin-right: 6px;
+  }
+  
+  .layer-name {
+    font-size: 0.7rem;
+  }
+  
+  .layer-amount {
+    font-size: 0.6rem;
+  }
+  
+  .plate-icon {
+    font-size: 3rem;
+  }
+  
+  .shopping-cart,
+  .available-ingredients,
+  .ingredients-to-prepare,
+  .cutting-board-area,
+  .scale-area,
+  .prepared-ingredients,
+  .available-prepared,
+  .burger-assembly {
+    padding: 15px;
+  }
+  
+  .proceed-btn,
+  .complete-burger {
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .cutting-board-surface {
+    min-height: 250px;
+  }
+  
+  .cutting-board-surface::before {
+    height: 40vh;
+    max-height: 320px;
+    min-height: 280px;
+  }
+  
+  .cutting-board-surface .wood-grain {
+    height: 40vh;
+    max-height: 320px;
+    min-height: 280px;
+  }
+  
+  .board-emoji {
+    font-size: 4rem;
+  }
+  
+  .cutting-board-hint p {
+    font-size: 1.4rem;
+  }
+  
+  .ingredient-game {
+    padding: 8px;
+  }
+  
+  .kitchen-screen .workspace-header {
+    padding: 6px 12px;
+    margin-bottom: 8px;
+  }
+  
+  .kitchen-screen .workspace-header .food-display {
+    font-size: 2rem;
+  }
+  
+  .kitchen-screen .workspace-header h1 {
+    font-size: 1.4rem;
+  }
+  
+  .ingredient-display-bar {
+    padding: 15px 20px;
+    margin-bottom: 12px;
+  }
+  
+  .ingredient-icons-row {
+    min-height: 90px;
+    gap: 20px;
+  }
+  
+  .inventory-ingredient {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .inventory-ingredient .ingredient-icon-large {
+    font-size: 3rem;
+  }
+  
+  .inventory-ingredient .ingredient-type-indicator {
+    width: 24px;
+    height: 24px;
+    font-size: 0.9rem;
+    bottom: -8px;
+    right: -8px;
+  }
+  
+  .scale-surface {
+    min-height: 100px;
+    padding: 12px;
+  }
+  
+  .kitchen-screen .prepared-ingredients {
+    max-height: 80px;
+    min-height: 50px;
+  }
+}
+
+@media (max-height: 800px) {
+  .kitchen-screen .workspace-header {
+    padding: 8px 15px;
+    margin-bottom: 10px;
+  }
+  
+  .kitchen-screen .workspace-header .food-display {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .kitchen-screen .workspace-header h1 {
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+  }
+  
+  .ingredient-display-bar {
+    padding: 18px 25px;
+    margin-bottom: 15px;
+  }
+  
+  .ingredient-icons-row {
+    min-height: 110px;
+    gap: 25px;
+  }
+  
+  .inventory-ingredient {
+    width: 95px;
+    height: 95px;
+  }
+  
+  .inventory-ingredient .ingredient-icon-large {
+    font-size: 3.6rem;
+  }
+  
+  .inventory-ingredient .ingredient-type-indicator {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    bottom: -10px;
+    right: -10px;
+  }
+  
+  .cutting-board-surface {
+    min-height: 300px;
+  }
+  
+  .cutting-board-surface::before {
+    width: 60vw;
+    max-width: 650px;
+    height: 30vh;
+    max-height: 280px;
+    min-width: 500px;
+    min-height: 220px;
+  }
+  
+  .cutting-board-surface::after {
+    width: 12vw;
+    max-width: 150px;
+    height: 12vw;
+    max-height: 150px;
+    min-width: 120px;
+    min-height: 120px;
+    transform: translate(-30vw, -50%);
+  }
+  
+  .cutting-board-surface .wood-grain {
+    width: 60vw;
+    max-width: 650px;
+    height: 30vh;
+    max-height: 280px;
+    min-width: 500px;
+    min-height: 220px;
+  }
+  
+  .scale-surface {
+    min-height: 120px;
+    padding: 15px;
+  }
+  
+  .board-emoji,
+  .scale-emoji {
+    font-size: 2rem;
+  }
+  
+  .kitchen-screen .prepared-ingredients {
+    max-height: 100px;
+    min-height: 60px;
+  }
+  
+  .prepared-list {
+    max-height: 60px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .workspace-header .food-display,
+  .burger-layer {
+    animation: none !important;
+  }
+  
+  .ingredient-card:hover,
+  .ingredient-item:hover,
+  .prepared-ingredient-card:hover,
+  .burger-layer:hover,
+  .cutting-board-area.drag-over,
+  .scale-area.drag-over {
+    transform: none !important;
+  }
+  
+  .dropZonePulse {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .cutting-board-area,
+  .scale-area,
+  .burger-assembly,
+  .available-ingredients,
+  .shopping-cart,
+  .ingredients-to-prepare,
+  .prepared-ingredients,
+  .available-prepared {
+    border-color: white;
+  }
+  
+  .ingredient-card,
+  .ingredient-item,
+  .selected-item,
+  .prepared-item,
+  .prepared-ingredient-card,
+  .burger-layer {
+    border-color: white;
+  }
+  
+  .proceed-btn,
+  .complete-burger {
+    background: #00aa00;
+  }
+  
+  .remove-btn {
+    background: #cc0000;
+  }
+}
+
+/* Focus states for accessibility */
+.ingredient-card:focus,
+.ingredient-item:focus,
+.prepared-ingredient-card:focus,
+.burger-layer:focus,
+.proceed-btn:focus,
+.complete-burger:focus,
+.remove-btn:focus {
+  outline: 3px solid rgba(255, 235, 59, 0.8);
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.ingredient-card.loading,
+.ingredient-item.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.ingredient-card.loading::after,
+.ingredient-item.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
