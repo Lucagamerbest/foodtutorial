@@ -1,437 +1,69 @@
 /* ============================================================================
-   COOKING GAME - OPTIMIZED LAYOUT CSS
+   FIXED KITCHEN WORKSPACE LAYOUT
    ============================================================================ */
 
-/* Base Game Container */
-.ingredient-game {
-  min-height: 100vh;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(30, 30, 50, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(20, 20, 40, 0.3) 0%, transparent 50%),
-    linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #000000 50%, #111111 75%, #000000 100%);
-  color: white;
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  overflow-x: hidden;
-}
-
-.kitchen-screen .ingredient-game {
-  display: flex;
-  flex-direction: column;
-  max-height: 100vh;
-  overflow: hidden;
-  padding: 15px;
-}
-
-/* ============================================================================
-   HEADER SECTION
-   ============================================================================ */
-
-.workspace-header {
-  text-align: center;
-  margin-bottom: 40px;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 25px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-.kitchen-screen .workspace-header {
-  margin-bottom: 20px;
-  padding: 15px 20px;
-  border-radius: 15px;
-  flex-shrink: 0;
-}
-
-.workspace-header .food-display {
-  font-size: 4rem;
-  margin-bottom: 20px;
-  animation: float 3s ease-in-out infinite;
-}
-
-.kitchen-screen .workspace-header .food-display {
-  font-size: 2.5rem;
-  margin-bottom: 8px;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
-
-.workspace-header h1 {
-  font-size: 2.5rem;
-  margin: 0 0 15px 0;
-  background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
-  background-size: 400% 400%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rainbow 4s ease infinite;
-}
-
-.kitchen-screen .workspace-header h1 {
-  font-size: 1.8rem;
-  margin: 0 0 8px 0;
-}
-
-@keyframes rainbow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.workspace-header p {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
-  line-height: 1.4;
-}
-
-.kitchen-screen .workspace-header p {
-  font-size: 1rem;
-  line-height: 1.2;
-}
-
-/* ============================================================================
-   BACK BUTTON
-   ============================================================================ */
-
-.back-button {
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  z-index: 1002;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.back-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-}
-
-/* ============================================================================
-   INGREDIENT INVENTORY BAR
-   ============================================================================ */
-
-.ingredient-display-bar {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(15px);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 20px 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  flex-shrink: 0;
-}
-
-.ingredient-display-bar h3 {
-  margin: 0 0 15px 0;
-  text-align: center;
-  color: #48dbfb;
-  font-size: 1.2rem;
-  text-shadow: 0 0 15px rgba(72, 219, 251, 0.5);
-}
-
-.ingredient-icons-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
-  flex-wrap: wrap;
-  min-height: 100px;
-}
-
-.inventory-ingredient {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 90px;
-  height: 90px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 3px solid rgba(255, 255, 255, 0.25);
-  border-radius: 18px;
-  cursor: grab;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  animation: float 3s ease-in-out infinite;
-}
-
-.inventory-ingredient:nth-child(1) { animation-delay: 0s; }
-.inventory-ingredient:nth-child(2) { animation-delay: 0.5s; }
-.inventory-ingredient:nth-child(3) { animation-delay: 1s; }
-.inventory-ingredient:nth-child(4) { animation-delay: 1.5s; }
-.inventory-ingredient:nth-child(5) { animation-delay: 2s; }
-.inventory-ingredient:nth-child(6) { animation-delay: 2.5s; }
-
-.inventory-ingredient:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.45);
-  transform: translateY(-8px) scale(1.08);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-}
-
-.inventory-ingredient:active {
-  cursor: grabbing;
-  transform: scale(1.15) rotate(5deg);
-}
-
-.ingredient-icon-large {
-  font-size: 3.5rem;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-  margin-bottom: 5px;
-}
-
-.ingredient-type-indicator {
-  position: absolute;
-  bottom: -8px;
-  right: -8px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 3px solid rgba(255, 255, 255, 1);
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-/* ============================================================================
-   MAIN WORKSPACE
-   ============================================================================ */
-
+/* Main workspace container - stack vertically with proper full-width sections */
 .kitchen-screen .kitchen-workspace {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 32px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
   width: 100%;
+  flex: 1;
+  max-width: none; /* Remove any width constraints */
 }
 
+/* Top section: cutting board (3/4) + scale (1/4) side by side */
 .kitchen-screen .workspace-stations {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  justify-content: center;
-  gap: 32px;
+  gap: 20px;
   width: 100%;
+  height: 350px; /* Reduced height */
+  flex: 1; /* Take most of the available space */
 }
 
-.cutting-board-area,
-.scale-area {
-  flex: 1 1 0;
+/* Cutting Board - 3/4 width */
+.cutting-board-area {
+  flex: 3; /* Takes 3/4 of the width */
   height: 100%;
-  min-height: unset;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  z-index: 2;
 }
 
-.cutting-board-area > *,
-.scale-area > * {
-  flex: 1 1 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Scale Area - 1/4 width */
 .scale-area {
-  max-width: 240px;
-  min-width: 180px;
+  flex: 1; /* Takes 1/4 of the width */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   background: rgba(255,255,255,0.04);
   border-radius: 24px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-  padding: 0;
-  margin-left: 0;
+  padding: 15px;
   z-index: 2;
-  position: relative;
+  
+  /* Remove all the fixed width constraints */
+  min-width: unset;
+  max-width: unset;
+  width: auto;
 }
 
-.cutting-board-area {
-  max-width: 900px;
-  background: transparent;
-  border: none;
-  padding: 0;
-  z-index: 2;
-}
-
-.cutting-board-area h3 {
-  margin: 0 0 10px 0;
+.scale-area h3 {
+  margin: 0 0 15px 0;
   text-align: center;
-  color: #deb887;
+  color: #48dbfb;
   font-size: 1.1rem;
-  text-shadow: 0 0 10px rgba(222, 184, 135, 0.5);
+  text-shadow: 0 0 10px rgba(72, 219, 251, 0.5);
+  flex-shrink: 0;
 }
 
-.cutting-board-surface {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-}
-
-.cutting-board-surface::before,
-.cutting-board-surface .wood-grain {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  max-width: 900px;
-  max-height: 100%;
-  min-width: 600px;
-  min-height: 350px;
-}
-
-.cutting-board-surface::before {
-  background: 
-    radial-gradient(circle at 8% center, rgba(0, 0, 0, 0.9) 18px, transparent 19px, transparent 21px, #8B4513 22px),
-    linear-gradient(145deg, #8B4513 0%, #A0522D 30%, #8B4513 70%, #654321 100%);
-  border-radius: 40px 200px 200px 40px;
-  box-shadow: 
-    inset 0 15px 40px rgba(0, 0, 0, 0.4),
-    inset 0 -15px 35px rgba(255, 255, 255, 0.1),
-    0 25px 70px rgba(0, 0, 0, 0.6),
-    0 0 0 3px rgba(139, 69, 19, 0.8);
-  z-index: 1;
-  transition: all 0.3s ease;
-}
-
-.cutting-board-surface::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-400px, -50%);
-  width: 160px;
-  height: 160px;
-  background: 
-    radial-gradient(circle at 75% center, rgba(0, 0, 0, 0.9) 18px, transparent 19px, transparent 21px, #8B4513 22px),
-    linear-gradient(145deg, #8B4513 0%, #A0522D 30%, #8B4513 70%, #654321 100%);
-  border-radius: 50% 40px 40px 50%;
-  box-shadow: 
-    inset 0 12px 30px rgba(0, 0, 0, 0.3),
-    inset 0 -12px 25px rgba(255, 255, 255, 0.1),
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 0 3px rgba(139, 69, 19, 0.8);
-  z-index: 2;
-  transition: all 0.3s ease;
-}
-
-.cutting-board-surface .wood-grain {
-  background: 
-    repeating-linear-gradient(
-      0deg,
-      transparent 0px,
-      rgba(139, 69, 19, 0.3) 1px,
-      transparent 2px,
-      transparent 30px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0px,
-      rgba(101, 67, 33, 0.15) 1px,
-      transparent 2px,
-      transparent 50px
-    );
-  border-radius: 40px 200px 200px 40px;
-  pointer-events: none;
-  z-index: 3;
-}
-
-.cutting-board-hint {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.95);
-  z-index: 5;
-  pointer-events: none;
-}
-
-.board-emoji {
-  font-size: 5rem;
-  opacity: 0.9;
-  text-shadow: 6px 6px 20px rgba(0, 0, 0, 0.8);
-  margin-bottom: 15px;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-}
-
-.cutting-board-hint p {
-  margin: 0;
-  font-weight: 600;
-  font-size: 1.5rem;
-  text-shadow: 4px 4px 15px rgba(0, 0, 0, 0.9);
-  background: rgba(0, 0, 0, 0.8);
-  padding: 25px 40px;
-  border-radius: 20px;
-  backdrop-filter: blur(15px);
-  border: 3px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.cutting-board-area.drag-over .cutting-board-surface::before {
-  box-shadow: 
-    inset 0 15px 40px rgba(0, 0, 0, 0.4),
-    inset 0 -15px 35px rgba(255, 255, 255, 0.1),
-    0 25px 70px rgba(0, 0, 0, 0.6),
-    0 0 0 3px rgba(139, 69, 19, 0.8),
-    0 0 60px rgba(255, 235, 59, 0.8),
-    0 0 100px rgba(255, 235, 59, 0.4);
-  transform: translate(-50%, -50%) scale(1.02);
-}
-
-.cutting-board-area.drag-over .cutting-board-surface::after {
-  transform: translate(-400px, -50%) scale(1.02);
-  box-shadow: 
-    inset 0 12px 30px rgba(0, 0, 0, 0.3),
-    inset 0 -12px 25px rgba(255, 255, 255, 0.1),
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 0 3px rgba(139, 69, 19, 0.8),
-    0 0 40px rgba(255, 235, 59, 0.6);
-}
-
-/* ============================================================================
-   PREPARED INGREDIENTS
-   ============================================================================ */
-
+/* Prepared Ingredients - FULL WIDTH like header sections */
 .kitchen-screen .prepared-ingredients {
   background: rgba(76, 175, 80, 0.15);
   backdrop-filter: blur(15px);
@@ -439,315 +71,89 @@
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 8px 25px rgba(76, 175, 80, 0.1);
-  max-height: 140px;
+  
+  /* Simple full width */
+  width: 100%;
+  margin: 0;
+  
   flex-shrink: 0;
+  max-height: 180px;
+  height: auto;
 }
 
-.prepared-ingredients h3 {
+/* Ensure the main game container doesn't constrain width on kitchen screen */
+.kitchen-screen.ingredient-game {
+  padding: 15px 0; /* Remove horizontal padding */
+}
+
+/* Keep horizontal padding only for the header and inventory */
+.kitchen-screen .workspace-header,
+.kitchen-screen .ingredient-display-bar {
+  margin: 0 15px; /* Add horizontal margin to these sections instead */
+}
+
+/* Ensure cutting board content fills the area properly */
+.cutting-board-area h3,
+.scale-area h3 {
+  flex-shrink: 0;
   margin: 0 0 15px 0;
-  text-align: center;
-  color: #4CAF50;
-  font-size: 1.1rem;
-  text-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
 }
 
+.cutting-board-surface,
+.scale-surface {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fix the cutting board surface sizing */
+.cutting-board-surface::before,
+.cutting-board-surface .wood-grain {
+  width: 90%; /* Use percentage instead of fixed px */
+  height: 80%;
+  max-width: none;
+  min-width: none;
+  min-height: none;
+  max-height: none;
+}
+
+.cutting-board-surface::after {
+  width: 120px;
+  height: 120px;
+  /* Position relative to the board size */
+  transform: translate(-45%, -50%);
+}
+
+/* Ensure prepared list scrolls properly in constrained height */
 .prepared-list {
-  max-height: 80px;
+  max-height: 100px;
   overflow-y: auto;
   margin-bottom: 10px;
 }
 
-.no-prepared {
-  text-align: center;
-  color: rgba(255, 255, 255, 0.6);
-  font-style: italic;
-  padding: 20px;
-  border: 2px dashed rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  font-size: 0.9rem;
-}
-
-.prepared-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 15px;
-  background: rgba(76, 175, 80, 0.2);
-  border: 2px solid rgba(76, 175, 80, 0.4);
-  border-radius: 8px;
-  margin-bottom: 8px;
-  transition: all 0.3s ease;
-}
-
-.prepared-item:hover {
-  background: rgba(76, 175, 80, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-}
-
-.prepared-item .item-emoji {
-  font-size: 1.3rem;
-}
-
-.prepared-item .item-name {
-  flex: 1;
-  font-weight: 600;
-  color: white;
-  font-size: 0.9rem;
-}
-
-.item-amount {
-  font-size: 0.8rem;
-  color: #feca57;
-  background: rgba(254, 202, 87, 0.2);
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1px solid rgba(254, 202, 87, 0.3);
-}
-
-.proceed-btn {
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, #4CAF50, #45a049);
-  color: white;
-  border: 2px solid rgba(76, 175, 80, 0.7);
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  margin-top: 10px;
-}
-
-.proceed-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5CBF60, #4CAF50);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
-}
-
-.proceed-btn:disabled {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.4);
-  cursor: not-allowed;
-  border-color: rgba(255, 255, 255, 0.1);
-  transform: none;
-  box-shadow: none;
-}
-
-/* ============================================================================
-   RESPONSIVE DESIGN
-   ============================================================================ */
-
+/* Responsive adjustments */
 @media (max-width: 1024px) {
-  .kitchen-screen .kitchen-workspace,
   .kitchen-screen .workspace-stations {
     flex-direction: column;
-    align-items: center;
+    height: auto;
     gap: 25px;
   }
-  .cutting-board-area {
-    max-width: 100%;
-  }
+  
+  .cutting-board-area,
   .scale-area {
-    width: 240px;
-    align-self: center;
+    flex: none;
+    height: 300px;
   }
 }
 
 @media (max-width: 768px) {
   .kitchen-screen .workspace-stations {
-    padding: 15px;
+    height: auto;
   }
   
-  .cutting-board-surface::before {
-    width: 600px;
-    height: 300px;
-  }
-  
-  .cutting-board-surface::after {
-    width: 120px;
-    height: 120px;
-    transform: translate(-300px, -50%);
-  }
-  
-  .cutting-board-surface .wood-grain {
-    width: 600px;
-    height: 300px;
-  }
-  
-  .board-emoji {
-    font-size: 4rem;
-  }
-  
-  .cutting-board-hint p {
-    font-size: 1.3rem;
-    padding: 20px 30px;
-  }
-  
+  .cutting-board-area,
   .scale-area {
-    width: 200px;
-  }
-  
-  .ingredient-icons-row {
-    gap: 15px;
-  }
-  
-  .inventory-ingredient {
-    width: 75px;
-    height: 75px;
-  }
-  
-  .ingredient-icon-large {
-    font-size: 3rem;
-  }
-  
-  .back-button {
-    top: 20px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    font-size: 1.3rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .kitchen-screen .workspace-stations {
-    padding: 10px;
-  }
-  
-  .cutting-board-surface::before {
-    width: 450px;
     height: 250px;
   }
-  
-  .cutting-board-surface::after {
-    width: 100px;
-    height: 100px;
-    transform: translate(-225px, -50%);
-  }
-  
-  .cutting-board-surface .wood-grain {
-    width: 450px;
-    height: 250px;
-  }
-  
-  .board-emoji {
-    font-size: 3rem;
-  }
-  
-  .cutting-board-hint p {
-    font-size: 1.1rem;
-    padding: 15px 25px;
-  }
-  
-  .scale-area {
-    width: 180px;
-  }
-  
-  .inventory-ingredient {
-    width: 65px;
-    height: 65px;
-  }
-  
-  .ingredient-icon-large {
-    font-size: 2.5rem;
-  }
-  
-  .back-button {
-    width: 45px;
-    height: 45px;
-    font-size: 1.2rem;
-  }
-}
-
-/* ============================================================================
-   ACCESSIBILITY & PERFORMANCE
-   ============================================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-  .kitchen-screen .workspace-header .food-display,
-  .inventory-ingredient {
-    animation: none !important;
-  }
-  
-  .cutting-board-area.drag-over .cutting-board-surface::before,
-  .cutting-board-area.drag-over .cutting-board-surface::after,
-  .scale-area.drag-over {
-    transform: none !important;
-  }
-}
-
-.cutting-board-area:focus,
-.scale-area:focus,
-.inventory-ingredient:focus,
-.proceed-btn:focus {
-  outline: 3px solid rgba(255, 235, 59, 0.8);
-  outline-offset: 2px;
-}
-
-.prepared-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.prepared-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 3px;
-}
-
-.prepared-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
-}
-
-.prepared-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.aesthetic-scale {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 10px auto;
-  position: relative;
-  z-index: 2;
-}
-.aesthetic-scale svg {
-  display: block;
-  margin: 0 auto;
-  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.18));
-}
-.scale-dial-label {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.1rem;
-  color: #888;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.12);
-  pointer-events: none;
-}
-
-.scale-surface {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0 auto;
-  background: radial-gradient(circle at center, #c0c0c0 0%, #a0a0a0 70%, #808080 100%);
-  border: 2px solid #666;
-  border-radius: 10px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 80px;
-  max-height: 120px;
-  box-shadow: 
-    inset 0 3px 10px rgba(0, 0, 0, 0.5),
-    inset 0 -3px 6px rgba(255, 255, 255, 0.2),
-    0 2px 12px rgba(0, 0, 0, 0.4);
 }
